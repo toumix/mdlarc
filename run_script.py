@@ -1,10 +1,11 @@
+import os
 import sys
 import argparse
 from pathlib import Path
 from time import perf_counter
 
 # Choose whether scoring is enabled or not
-SCORE_RESULTS = True
+SCORE_RESULTS = os.environ.get("MDLARC_SCORE", "1") == "1"
 VISUALIZE = False
 
 # 1. SETUP PATHS AND IMPORT MODULES
@@ -19,6 +20,12 @@ print("Modules imported successfully.")
 
 # 2. DEFINE CONFIG
 PRESETS = {
+    "smoke": {
+        "epochs": 2,
+        "max_augments": 8,
+        "checkpoint_epochs": (),
+        "inference_epoch": 2,
+    },
     "low": {
         "epochs": 90,
         "max_augments": 80,

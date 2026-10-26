@@ -868,6 +868,9 @@ def run_evaluation(
     submission_data = _build_submission_from_aaivr(aaivr_results)
     with submission_path.open("w") as handle:
         json.dump(submission_data, handle)
+    candidates = {f"{sel.task_id}/{sel.original_pair_index}": sel.ranked_candidates for sel in aaivr_results}
+    with submission_path.with_name("candidates.json").open("w") as handle:
+        json.dump(candidates, handle)
 
     t_duration = perf_counter() - t_start
     print(f"Finished {run_name}. Submission saved to {submission_path}")
