@@ -33,7 +33,9 @@ image = (
     .apt_install("git")
     .pip_install(f"torch=={TORCH}", "numpy", "numba", "matplotlib", "packaging", "ninja",
                  "psutil", "wheel", extra_index_url="https://download.pytorch.org/whl/cu128")
-    .env({"FLASH_ATTN_CUDA_ARCHS": "90", "MAX_JOBS": "8", "FLASH_ATTENTION_FORCE_BUILD": "TRUE"})
+    .env({"FLASH_ATTN_CUDA_ARCHS": "90", "MAX_JOBS": "8", "FLASH_ATTENTION_FORCE_BUILD": "TRUE",
+          # the image's Python was built with clang, which the CUDA image lacks
+          "CC": "gcc", "CXX": "g++", "LDSHARED": "g++ -shared"})
     .run_commands(f"pip install flash-attn=={FLASH} --no-build-isolation")
     .add_local_dir("dataset_building_scripts", f"{ROOT}/dataset_building_scripts", copy=True)
     .run_commands(
