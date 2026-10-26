@@ -13,4 +13,10 @@ pair is shared (`070dd51e`, a duplicate of ARC-AGI-1's own training task `408532
 
 | claim | logged | what runs | expected | read |
 |---|---|---|---|---|
-| `high-1` | 2026-10-26 | `run_script.py high` unchanged, one Modal H100, torch 2.10, flash-attn 2.8.3, seed 42 | ~44% (README; the author's 5090 and software differ, so numerics do) | — |
+| `high-1` | 2026-10-26 | `run_script.py high` unchanged, one Modal H100, torch 2.10, flash-attn 2.8.3, seed 42 | ~44% (README; the author's 5090 and software differ, so numerics do) | **162.5/400 = 40.6%**, 161 tasks fully solved; 4,392 s on the H100 (~1 h training, 688 s inference) |
+
+`high-1` against wave 1 (rel-int/arc_1d#3, whose per-task sets were already read): of the 28 tasks
+its symbolic methods solve (library of re-arc verifiers 21, enumeration 7, the LDT's 3 new
+programs), 17 are among mdlARC's 161 and **11 are not**, two of the LDT's three among them
+(`0c786b71`, `d4b1c2b1`). The union is 172 tasks, an oracle bound until a rule that picks between
+them is logged and read.
